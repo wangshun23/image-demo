@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <input type="file" onchange="demo(this)">
+    <div id="preview">
+
+    </div>
   </div>
 </template>
 
@@ -27,10 +30,11 @@ html,body{
   margin: 0;
 }
 
-#app {
+#preview {
   position: relative;
   width: 750px;
   border: 2px solid #333333;
   overflow: hidden;
+  height: 1000px;
 }
 </style>
