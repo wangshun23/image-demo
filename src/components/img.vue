@@ -1,6 +1,6 @@
 <template>
   <div :style="{ width: width + 'px', height: height + 'px', top: top + 'px', left: left + 'px'}" class="img-warp">
-    <img :src="src" width="100%">
+    <img :src="src" width="100%" :draggable="drag">
   </div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
   name: 'Img',
   data () {
     return {
+      drag: true,
       src: '',
       width: 0,
       height: 0,
