@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    html, body{
+      padding: 0;
+      margin: 0;
+    }
+    #preview{
+      position: relative;
+      width: 750px;
+      height: 10000px;
+      border: 2px solid #333333;
+      overflow: hidden;
+    }
+    #preview img{
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" onchange="demo(this)">
+  <div id="preview"></div>
+  <script>
+  let ox = 0
+  let oy = 0
+  let _data = null
+  function demo(dom){
+    var file = dom.files[0]
+    transfrom(file)
+    .then((data) => {
+      var preview = document.getElementById("preview")
+      _data = data
+      preview.append(data.dom)
+    })
+    .catch((err) => {
+    })
+  }
+  function transfrom(file) {
+    let reader = new FileReader(),
+      _resolve
+    reader.readAsDataURL(file)
+    reader.onload = function(e) {
+      let dom = new Image()
+      const baseUrl = this.result
+      dom.src = baseUrl
+      dom.setAttribute("draggable", true)
+      let result = {
+        dom,
+        baseUrl,
+        width: dom.width,
+        width: dom.height,
+        rotate: 0,
+        x: 0,
+        y: 0
+      }
+      dom.ondragstart=function(e){
+        ox = e.offsetX
+        oy = e.offsetY
+      }
+      dom.ondrag=function(e){
+        let _x = e.pageX
+        let _y = e.pageY
+        if(_x==0 && _y==0){
+          return
+        }
+        _x-=ox
+        _y-=oy
+
+        dom.style.left=_x+'px'
+        dom.style.top=_y+'px'
+        result.x = _x
+        result.y = _y
+        console.log(_data.x, _data.y)
+      }
+
+      dom.onload = function() {
+        _resolve(result)
+      }
+    }
+    return new Promise(resolve => {
+      _resolve = resolve
+    })
+  }
+
+  </script>
+</body>
+</html>
