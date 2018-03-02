@@ -19,7 +19,6 @@ export default {
       rotate: 0,
       x: 0,
       y: 0,
-      dom: {},
       ox: 0,
       oy: 0,
       zIndex: getZIndex()
@@ -35,21 +34,13 @@ export default {
     dstart(e){
       e.dataTransfer.setData("imgMove", true);
       this.zIndex = getZIndex()
-      // console.log("123")
-      // e.preventDefault()
       this.ox = e.offsetX
       this.oy = e.offsetY
     },
     ddrag(e){
-
-      let _x = e.pageX
-      let _y = e.pageY
-      if (_x == 0 && _y == 0) {
-        return
-      }
-      _x -= this.ox
-      _y -= this.oy
-
+      if (_x == 0 && _y == 0) return
+      const _x = e.pageX - this.ox
+      const _y = e.pageY - this.oy
       this.left = _x
       this.top = _y
     }
@@ -58,12 +49,13 @@ export default {
     let reader = new FileReader()
     reader.readAsDataURL(this.file)
     reader.onload = e => {
-      this.dom = new Image()
-      this.src = e.target.result
-      this.dom.src = e.target.result
-      this.dom.onload = () => {
-        this.width = this.dom.width
-        this.height = this.dom.height
+      let dom = new Image()
+      let src = e.target.result
+      dom.src = src
+      this.src = src
+      dom.onload = () => {
+        this.width = dom.width
+        this.height = dom.height
       }
     }
   }
