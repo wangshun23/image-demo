@@ -10,6 +10,7 @@
 
 <script>
 export default {
+
 }
 </script>
 
@@ -19,6 +20,12 @@ export default {
   width: 20px;
   height: 4px;
   background: #000000;
+}
+.abs:hover{
+  background: red;
+}
+.abs:hover::after{
+  background: red;
 }
 .abs::after{
   content: "";
@@ -33,32 +40,32 @@ export default {
   left: -6px;
 }
 .left_top::after{
-  top: 9px;
-  left:-9px;
+  top: 8px;
+  left:-8px;
 }
 .right_top{
   top: -6px;
   right: -6px;
 }
 .right_top::after{
-  top: 9px;
-  left: 9px;
+  top: 8px;
+  left: 8px;
 }
 .right_bottom{
   bottom: -6px;
   right: -6px;
 }
 .right_bottom::after{
-  top: -9px;
-  left: 9px;
+  top: -8px;
+  left: 8px;
 }
 .left_bottom{
   bottom: -6px;
   left: -6px;
 }
 .left_bottom::after{
-  top: -9px;
-  left: -9px;
+  top: -8px;
+  left: -8px;
 }
 
 </style>
