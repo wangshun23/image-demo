@@ -1,13 +1,19 @@
 <template>
-<div :style="{ width: width + 'px', zIndex:zIndex, height: height + 'px', top: top + 'px', left: left + 'px'}" class="img-warp"  @click="testAlert()">
-  <img :src="src" width="100%" :draggable="drag" @dragstart="dstart" @drag="ddrag">
-</div>
+  <div :style="{ width: width + 'px', zIndex:zIndex, height: height + 'px', top: top + 'px', left: left + 'px'}" class="img-warp"  @click="testAlert()">
+    <transform>
+      <img :src="src"  :draggable="drag" @dragstart="dstart" @drag="ddrag">
+    </transform>
+  </div>
 </template>
 
 <script>
 import { getZIndex } from '../libs/max-zindex'
+import transform from './transform.vue'
 export default {
   name: 'Img',
+  components:{
+    transform
+  },
   data() {
     return {
       drag: true,
