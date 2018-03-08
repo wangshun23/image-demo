@@ -1,16 +1,22 @@
 <template>
   <div>
-    <div class="left_top abs"></div>
+    <!-- <div class="left_top abs"></div>
     <div class="right_top abs"></div>
     <div class="right_bottom abs"></div>
-    <div class="left_bottom abs"></div>
-    <slot></slot>
+    <div class="left_bottom abs"></div> -->
+    <drag>
+      <slot></slot>
+    </drag>
+
   </div>
 </template>
 
 <script>
+import Drag from './drag'
 export default {
-
+  components:{
+    Drag
+  }
 }
 </script>
 

@@ -1,6 +1,8 @@
 <template>
   <div class="image-box">
-    <img class="image" id="image" :src="imageSrc" :class="{'image-move': rotateFlag}" :style="renderStyl" @load="loadAcion" @mousemove="mouseMoveAction" @mousedown="mouseDownAction" @mouseup="mouseUpAction" @mouseleave="mouseLeaveAction"/>
+    <img class="image" id="image"
+    :src="imageSrc"
+    :class="{'image-move': rotateFlag}" :style="renderStyl" @load="loadAcion" @mousemove="mouseMoveAction" @mousedown="mouseDownAction" @mouseup="mouseUpAction" @mouseleave="mouseLeaveAction"/>
     <div class="image-rotate"></div>
   </div>
 </template>
@@ -47,15 +49,13 @@ export default {
   methods: {
     loadAcion (e) {
       let imageDom = e.currentTarget
-        console.log(imageDom)
-        console.log(imageDom.width, imageDom.offsetLeft, imageDom.offsetTop, imageDom.pageX)
+        // console.log(imageDom)
+        // console.log(imageDom.width, imageDom.offsetLeft, imageDom.offsetTop, imageDom.pageX)
         this.width = imageDom.width
         this.height = imageDom.height
         let top = imageDom.offsetTop
         this.x0 = imageDom.offsetLeft + this.width/2
         this.y0 = imageDom.offsetTop + this.height/2
-
-        console.log(this)
     },
     mouseMoveAction (e) {
       // console.log(e)
@@ -74,7 +74,7 @@ export default {
           let angleGap = this.angleStart - this.angleEnd
           let curAngle = this.angle + angleGap
           this.angle = curAngle%360
-          console.log(this.angle, "angle")
+          // console.log(this.angle, "angle")
         }
       } else {
         this.rotateFlag = false
@@ -82,8 +82,6 @@ export default {
     },
     mouseDownAction (e) {
       e.preventDefault()
-      console.log("down")
-      console.log(e)
       this.downFlag = true
       if(this.rotateFlag) {
         let angleObj = this.getAngle(e)
@@ -93,11 +91,9 @@ export default {
       }
     },
     mouseUpAction (e) {
-      console.log("up")
       this.downFlag = false
     },
     mouseLeaveAction (e) {
-      console.log("leave")
       this.downFlag = false
     },
     getAngle (e) {
@@ -110,7 +106,7 @@ export default {
         y: y,
         angle: angle
       }
-      console.log(angleObj)
+      // console.log(angleObj)
       return angleObj
     },
 

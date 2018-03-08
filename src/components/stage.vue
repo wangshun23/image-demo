@@ -5,21 +5,27 @@
 </template>
 
 <script>
-
+import {
+  mapState
+} from 'vuex'
 export default {
   name: 'Img',
   data() {
     return {
     }
   },
-  props: {
-
+  computed: {
+    ...mapState([
+      'trans'
+    ])
   },
   methods: {
 
   },
-  created() {
-
+  mounted() {
+    const stage = document.getElementById('stage')
+    this.trans.stage.x = stage.offsetLeft
+    this.trans.stage.y = stage.offsetTop
   }
 }
 </script>
