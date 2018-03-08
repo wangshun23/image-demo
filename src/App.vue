@@ -1,18 +1,20 @@
 <template>
 <div id="app" @dragenter="_onDragEnter" @dragover="_onDragOver" @dragleave="_onDragLeave" @drop="_onDrop">
-  <div id="preview">
+  <stage>
     <Img v-for="file in filelist" :file="file"></Img>
-  </div>
+  </stage>
 </div>
 </template>
 
 <script>
 import Img from './components/img'
+import Stage from './components/stage'
 
 export default {
   name: 'App',
   components: {
-    Img
+    Img,
+    Stage
   },
   data() {
     return {
@@ -20,7 +22,7 @@ export default {
     }
   },
   methods: {
-    
+
     _onDragEnter(e) {
       const imgMoveState = e.dataTransfer.getData("imgMove")
       if(imgMoveState) return
@@ -58,10 +60,6 @@ body {
 }
 
 #preview {
-  position: relative;
-  width: 750px;
-  border: 2px solid #333333;
-  overflow: hidden;
-  height: 1000px;
+
 }
 </style>

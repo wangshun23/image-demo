@@ -1,7 +1,7 @@
 <template>
-  <div :style="{ width: width + 'px', zIndex:zIndex, height: height + 'px', top: top + 'px', left: left + 'px'}" class="img-warp"  @click="testAlert()">
+  <div :style="{ width: width + 'px', zIndex:zIndex, height: height + 'px', top: top + 'px', left: left + 'px'}" class="img-warp"  >
     <transform>
-      <img :src="src"  :draggable="drag" @dragstart="dstart" @drag="ddrag">
+      <img :src="src"  :draggable="drag" @dragstart="dstart" @drag="ddrag" @click="testAlert()">
     </transform>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 import { getZIndex } from '../libs/max-zindex'
 import transform from './transform.vue'
+
 export default {
   name: 'Img',
   components:{
@@ -27,7 +28,9 @@ export default {
       y: 0,
       ox: 0,
       oy: 0,
-      zIndex: getZIndex()
+      zIndex: getZIndex(),
+      sx: 0,
+      sy: 0
     }
   },
   props: {
@@ -44,14 +47,18 @@ export default {
       this.oy = e.offsetY
     },
     ddrag(e){
+      // console.log(e.pageX)
       if (_x == 0 && _y == 0) return
-      const _x = e.pageX - this.ox
-      const _y = e.pageY - this.oy
+      const _x = e.pageX - this.ox - this.sx
+      const _y = e.pageY - this.oy - this.sy
       this.left = _x
       this.top = _y
     }
   },
   created() {
+    const stage = document.getElementById('stage')
+    this.sx = stage.offsetLeft
+    this.sy = stage.offsetTop
     let reader = new FileReader()
     reader.readAsDataURL(this.file)
     reader.onload = e => {
