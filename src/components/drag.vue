@@ -20,25 +20,31 @@ export default {
       sy: 0
     }
   },
+  props: {
+    file: Object
+  },
   computed: {
     ...mapState([
-      'trans'
+      'stage'
     ])
+  },
+  created() {
+    // console.log('d', this)
   },
   methods:{
     dstart(e){
       e.dataTransfer.setData("imgMove", true);
-      this.trans.zIndex = getZIndex()
+      this.file.zIndex = getZIndex()
       this.ox = e.offsetX
       this.oy = e.offsetY
     },
     ddrag(e){
       // console.log(e.pageX)
       if (_x == 0 && _y == 0) return
-      const _x = e.pageX - this.ox - this.trans.stage.x
-      const _y = e.pageY - this.oy - this.trans.stage.y
-      this.trans.left = _x
-      this.trans.top = _y
+      const _x = e.pageX - this.ox - this.stage.x
+      const _y = e.pageY - this.oy - this.stage.y
+      this.file.left = _x
+      this.file.top = _y
     }
   }
 }

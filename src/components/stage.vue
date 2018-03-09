@@ -9,23 +9,24 @@ import {
   mapState
 } from 'vuex'
 export default {
-  name: 'Img',
+  name: 'Stage',
   data() {
     return {
     }
   },
   computed: {
     ...mapState([
-      'trans'
+      'stage'
     ])
   },
   methods: {
 
   },
   mounted() {
-    const stage = document.getElementById('stage')
-    this.trans.stage.x = stage.offsetLeft
-    this.trans.stage.y = stage.offsetTop
+    // const stage = document.getElementById('stage')
+    // console.log(this.$el.offsetTop)
+    this.stage.x = this.$el.offsetLeft
+    this.stage.y = this.$el.offsetTop
   }
 }
 </script>
