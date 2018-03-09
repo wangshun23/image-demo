@@ -1,8 +1,15 @@
 <template>
   <div class="image-box">
     <img class="image" id="image"
-    :src="imageSrc"
-    :class="{'image-move': rotateFlag}" :style="renderStyl" @load="loadAcion" @mousemove="mouseMoveAction" @mousedown="mouseDownAction" @mouseup="mouseUpAction" @mouseleave="mouseLeaveAction"/>
+      :src="imageSrc"
+      :class="{'image-move': rotateFlag, 'image-ew': scaleFlag}"
+      :style="{width: renderWidth, height: renderHeight, transform: renderRotate}"
+      @load="loadAcion"
+      @mousemove="mouseMoveAction"
+      @mousedown="mouseDownAction"
+      @mouseup="mouseUpAction"
+      @mouseleave="mouseLeaveAction"
+    />
     <div class="image-rotate"></div>
   </div>
 </template>
@@ -33,6 +40,11 @@ export default {
       downFlag: false,
       angleStart: 0,
       angleEnd: 0,
+      scaleRote: 0.1,
+      scaleFlag: false,
+      scaleWidth: true,
+      scaleStart: 0,
+      scaleEnd: 0
     }
   },
   computed: {
@@ -40,7 +52,17 @@ export default {
       return {
         transform: `rotate(${this.angle}deg)`
       }
-    }
+    },
+    renderWidth () {
+      return `${this.width}px`
+    },
+    renderHeight () {
+      return `${this.height}px`
+    },
+    renderRotate () {
+      return `rotate(${this.angle}deg)`
+    },
+
   },
   created () {
   },
@@ -53,6 +75,12 @@ export default {
         // console.log(imageDom.width, imageDom.offsetLeft, imageDom.offsetTop, imageDom.pageX)
         this.width = imageDom.width
         this.height = imageDom.height
+        if(this.width/this.height >1) {
+          this.scaleWidth = true
+        } else {
+          this.scaleWidth = false
+        }
+
         let top = imageDom.offsetTop
         this.x0 = imageDom.offsetLeft + this.width/2
         this.y0 = imageDom.offsetTop + this.height/2
@@ -62,9 +90,12 @@ export default {
       let x = e.offsetX
       let y = e.offsetY
       // console.log(x, y)
-      let xRote = (this.width - x)/this.width
-      let yRote = y/this.height
-      if(xRote <= this.rotateRote && yRote <= this.rotateRote) {
+      let xrRote = (this.width - x)/this.width
+      let yrRote = y/this.height
+      let xcRote = x/this.width
+      let ycRote = y/this.height
+
+      if(xrRote <= this.rotateRote && yrRote <= this.rotateRote) {
         this.rotateFlag = true
         if(this.downFlag) {
           let angleObj = this.getAngle(e)
@@ -76,8 +107,26 @@ export default {
           this.angle = curAngle%360
           // console.log(this.angle, "angle")
         }
+      } else if(xcRote <= this.scaleRote && ycRote <= this.scaleRote) {
+        this.scaleFlag = true
+        if(this.downFlag) {
+          this.scaleEnd = this.scaleWidth?e.offsetX:e.offsetY
+          let gap = this.scaleStart-this.scaleEnd
+          if(this.scaleWidth) {
+            let width = this.width + gap
+            let height = this.height*(width/this.width)
+            this.width = width
+            this.height = height
+          } else {
+            let height = this.height + gap
+            let width = this.width*(height/this.height)
+            this.width = width
+            this.height = height
+          }
+        }
       } else {
         this.rotateFlag = false
+        this.scaleFlag = false
       }
     },
     mouseDownAction (e) {
@@ -88,6 +137,9 @@ export default {
         this.x1 = angleObj.x
         this.y1 = angleObj.y
         this.angleStart = angleObj.angle
+      }
+      if(this.scaleFlag) {
+        this.scaleStart = this.scaleWidth?e.offsetX:e.offsetY
       }
     },
     mouseUpAction (e) {
@@ -108,6 +160,9 @@ export default {
       }
       // console.log(angleObj)
       return angleObj
+    },
+    getScale (e) {
+
     },
 
   }
@@ -132,5 +187,10 @@ export default {
 .image-move {
   /*cursor: move;*/
   cursor: ne-resize;
+  /*cursor: ew-resize;*/
+  /*cursor: ns-resize;*/
+}
+.image-ew {
+  cursor: nwse-resize;
 }
 </style>
