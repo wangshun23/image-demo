@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 // import transform from './store/transform'
 // import App from './Rotate'
+// import App from './Wrap'
 Vue.config.productionTip = false
 import store from './store/transform'
 

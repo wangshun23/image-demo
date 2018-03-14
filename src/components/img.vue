@@ -1,20 +1,24 @@
 <template>
-  <div :style="{ width: obj.width + 'px', zIndex: this.obj.zIndex, height: obj.height + 'px', top: obj.top + 'px', left: obj.left + 'px'}" class="img-warp"  >
+  <div :style="{ width: obj.width + 'px', zIndex: obj.zIndex, height: obj.height + 'px', top: obj.top + 'px', left: obj.left + 'px', transform: renderRotate}" class="img-warp"  >
     <drag :file = "obj">
       <img :src="obj.src">
     </drag>
+    <swrap :obj="obj" />
   </div>
 </template>
 
 <script>
 import Drag from './drag.vue'
+import Swrap from './select-wrap.vue'
+
 import {
   mapState
 } from 'vuex'
 export default {
   name: 'Img',
   components:{
-    Drag
+    Drag,
+    Swrap
   },
   data() {
     return {
@@ -24,7 +28,10 @@ export default {
   computed: {
     ...mapState([
       'files'
-    ])
+    ]),
+    renderRotate () {
+      return `rotate(${this.obj.rotate}deg)`
+    },
   },
   props: {
     file: File
@@ -39,7 +46,7 @@ export default {
       left: 0,
       src: '',
       rotate: 0,
-      zIndex: 0
+      zIndex: 0,
     }
     this.files.push(this.obj)
     let reader = new FileReader()
@@ -52,6 +59,9 @@ export default {
       dom.onload = () => {
         this.obj.width = dom.width
         this.obj.height = dom.height
+
+        this.obj.left = dom.offsetLeft
+        this.obj.top = dom.offsetTop
       }
     }
   }
