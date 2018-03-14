@@ -54,23 +54,19 @@ export default {
       rotate: 0,
       width: 216,
       height: 226,
-      angle: 0,
-      x0: 0,
-      y0: 0,
-      x1: 0,
-      y1: 0,
-      x2: 0,
-      y2: 0,
-      rotateRote: 0.25,
-      rotateFlag: false,
       downFlag: false,
+      downRotateFlag: false,
       angleStart: 0,
       angleEnd: 0,
-      scaleRote: 0.1,
       scaleFlag: false,
       scaleWidth: true,
       scaleStart: 0,
       scaleEnd: 0,
+
+      angle: 0,
+      rotateFlag: false,
+      rotateRote: 0.25,
+      scaleRote: 0.1,
 
       // obj: {}
     }
@@ -114,10 +110,6 @@ export default {
       } else {
         this.scaleWidth = false
       }
-
-      // let top = imageDom.offsetTop
-      // this.x0 = imageDom.offsetLeft + this.width/2
-      // this.y0 = imageDom.offsetTop + this.height/2
     },
     mouseMoveRotateAction (e) {
       if(this.downRotateFlag) {
